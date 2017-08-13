@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Lista de Usuarios</title>
+<link
+	th:href="@{/webjars/bootstrap/4.0.0-alpha.6-1/css/bootstrap.min.css}"
+	rel="stylesheet" />
+<link
+	th:href="@{/webjars/bootstrap/4.0.0-alpha.6-1/css/bootstrap-theme.min.css}"
+	rel="stylesheet" />
+</head>
+<body>
+	<div class="panel panel-default" style="margin: 10px">
+		<div class="panel-heading">
+			<h1 class="panel-title">Usuarios</h1>
+		</div>
+		<div class="panel-body">
+
+			<form class="form-horizontal" method="POST" th:object="${usuario}"
+				th:action="@{/usuarios}">
+				<div class="alert alert-success"
+					th:if="${! #strings.isEmpty(mensagem)}" th:text="${mensagem}"></div>
+
+				<!--  <div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+					<div th:each="detailedError : ${#fields.detailedErrors('senha')}">
+						<span th:text="${detailedError.message}"></span>
+					</div>
+				</div>-->
+
+				<input type="text" hidden="true" th:field="*{id}">
+				<div class="form-group row">
+					<div class="col-10">
+						<input class="form-control"
+							th:classappend="${#fields.hasErrors('nome')} ? alert-danger"
+							type="text" th:field="*{nome}" placeholder="Nome">
+					</div>
+				</div>
+				<div class="form-group row ">
+					<div class="col-10">
+						<input class="form-control"
+							th:classappend="${#fields.hasErrors('senha')} ? alert-danger"
+							type="password" th:field="*{senha}" placeholder="Senha">
+						<div th:each="detailedError : ${#fields.detailedErrors('senha')}">
+							<span th:text="${detailedError.message}">*</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group  row">
+					<div class="col-10">
+						<label th:each="sexo : ${sexos}" class="radio-inline"> <input
+							type="radio" th:value="${sexo}" th:field="*{sexo}" /> <span
+							th:text="${sexo.descricao}"></span>
+						</label>
+					</div>
+				</div>
+				<div class="form-group row ">
+					<div class="col-10">
+						<input class="form-control"
+							th:classappend="${#fields.hasErrors('email')} ? alert-danger"
+							type="text" th:field="*{email}" placeholder="Email">
+						<div th:each="detailedError : ${#fields.detailedErrors('email')}">
+							<span th:text="${detailedError.message}">*</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group row ">
+					<div class="col-10">
+						<input class="form-control"
+							th:classappend="${#fields.hasErrors('cpf')} ? alert-danger"
+							type="text" th:field="*{cpf}" placeholder="CPF">
+						<div th:each="detailedError : ${#fields.detailedErrors('cpf')}">
+							<span th:text="${detailedError.message}">*</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group row ">
+					<div class="col-10">
+						<input class="form-control"
+							th:classappend="${#fields.hasErrors('telefone')} ? alert-danger"
+							type="text" th:field="*{telefone}" placeholder="Telefone">
+					</div>
+				</div>
+
+				<button type="submit" class="btn btn-primary">Salvar</button>
+			</form>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Nome</th>
+						<th>Senha</th>
+						<th>Editar</th>
+						<th>Excluir</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="usuario : ${usuarios}">
+						<td th:text="${usuario.id}"></td>
+						<td th:text="${usuario.nome}"></td>
+						<td th:text="${usuario.senha}"></td>
+						<td><a th:href="@{/editar/{id}(id=${usuario.id})}">Editar</a></td>
+						<td><a th:href="@{/excluir/{id}(id=${usuario.id})}">Excluir</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

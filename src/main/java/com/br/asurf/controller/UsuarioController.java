@@ -60,7 +60,7 @@ public class UsuarioController {
 		
 	}
 	
-    @GetMapping("/editar/{id}")
+    @GetMapping("/usuario/editar/{id}")
     public ModelAndView editar(@PathVariable("id") Long id) {
     	ModelAndView modelAndView = new ModelAndView("ListaUsuarios"); 
     	modelAndView.addObject( this.usuarios.findOne(id));
@@ -69,7 +69,7 @@ public class UsuarioController {
         return modelAndView;
     }
     
-    @GetMapping("/excluir/{id}")
+    @GetMapping("/usuario/excluir/{id}")
     public ModelAndView excluir(@PathVariable("id") Long id,
 			RedirectAttributes attributes) {
     	this.usuarios.delete(id);

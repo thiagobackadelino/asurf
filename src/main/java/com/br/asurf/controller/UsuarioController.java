@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.br.asurf.model.Sexo;
 import com.br.asurf.model.Usuario;
-import com.br.asurf.repository.Usuarios;
+import com.br.asurf.repository.UsuariosRep;
  
 
 
@@ -24,7 +24,7 @@ import com.br.asurf.repository.Usuarios;
 public class UsuarioController {
 	
 	@Autowired
-	private Usuarios usuarios;
+	private UsuariosRep usuarios;
 
 	@RequestMapping(value = "/usuarios", method = RequestMethod.GET)
 	public ModelAndView novo(Usuario usuario) {

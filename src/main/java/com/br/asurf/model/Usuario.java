@@ -1,19 +1,22 @@
 package com.br.asurf.model;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.validation.constraints.Min;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.br.CPF;
 
-@Entity	
+@Entity
+@Table(name = "usuarios")
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -41,6 +44,11 @@ public class Usuario implements Serializable {
 	
 	@NotBlank(message = "Telefone é obrigatório")
 	private String telefone;
+	
+	@ManyToMany(mappedBy="usuarios" ,cascade = CascadeType.ALL)
+	private List<Role> roles;
+	
+	private boolean ativo = true;
 	
 	public Long getId() {
 		return id;
@@ -98,14 +106,32 @@ public class Usuario implements Serializable {
 		this.telefone = telefone;
 	}
 
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + (ativo ? 1231 : 1237);
 		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((roles == null) ? 0 : roles.hashCode());
 		result = prime * result + ((senha == null) ? 0 : senha.hashCode());
 		result = prime * result + ((sexo == null) ? 0 : sexo.hashCode());
 		result = prime * result + ((telefone == null) ? 0 : telefone.hashCode());
@@ -121,6 +147,8 @@ public class Usuario implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
+		if (ativo != other.ativo)
+			return false;
 		if (cpf == null) {
 			if (other.cpf != null)
 				return false;
@@ -141,15 +169,17 @@ public class Usuario implements Serializable {
 				return false;
 		} else if (!nome.equals(other.nome))
 			return false;
+		if (roles == null) {
+			if (other.roles != null)
+				return false;
+		} else if (!roles.equals(other.roles))
+			return false;
 		if (senha == null) {
 			if (other.senha != null)
 				return false;
 		} else if (!senha.equals(other.senha))
 			return false;
-		if (sexo == null) {
-			if (other.sexo != null)
-				return false;
-		} else if (!sexo.equals(other.sexo))
+		if (sexo != other.sexo)
 			return false;
 		if (telefone == null) {
 			if (other.telefone != null)

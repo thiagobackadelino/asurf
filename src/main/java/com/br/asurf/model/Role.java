@@ -29,8 +29,8 @@ public class Role  implements Serializable {
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 		@JoinTable(name="usuario_role",
-	             joinColumns={@JoinColumn(name="usuario_id")},
-	             inverseJoinColumns={@JoinColumn(name="role_id")})
+	             joinColumns={@JoinColumn(name="role_id")},
+	             inverseJoinColumns={@JoinColumn(name="usuario_id")})
 	  private List<Usuario> usuarios;
 	
 	

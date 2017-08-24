@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width" />
@@ -21,12 +22,10 @@
 </body> -->
 <body>
 
-
+<div sec:authorize="hasRole('ROLE_ADMIN')">
 	<div th:include="fragments/header :: header"></div>
-	
-	<div class="container">
-		<div class="jumbotron"></div>
 	</div>
+	<div class="container"></div>
 
 
 	<!-- Bootstrap core JavaScript

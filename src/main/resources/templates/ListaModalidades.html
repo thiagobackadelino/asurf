@@ -30,12 +30,12 @@
 					</div>
 				</div>-->
 
-				<input type="text" hidden="true" th:field="*{id}">
+				<input type="text" hidden="true" th:field="*{id}"/>
 				<div class="form-group row">
 					<div class="col-10">
 						<input class="form-control"
 							th:classappend="${#fields.hasErrors('nome')} ? alert-danger"
-							type="text" th:field="*{nome}" placeholder="Nome">
+							type="text" th:field="*{nome}" placeholder="Nome"/>
 					</div>
 				</div>
 				<button type="submit" class="btn btn-primary">Salvar</button>

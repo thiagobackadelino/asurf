@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width" />
@@ -13,6 +14,9 @@
 	rel="stylesheet" />
 </head>
 <body>
+
+	<div th:include="fragments/header :: header"></div>
+
 	<div class="panel panel-default" style="margin: 10px">
 		<div class="panel-heading">
 			<h1 class="panel-title">Praias</h1>
@@ -24,17 +28,16 @@
 				<div class="alert alert-success"
 					th:if="${! #strings.isEmpty(mensagem)}" th:text="${mensagem}"></div>
 
-				<!--  <div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
-					<div th:each="detailedError : ${#fields.detailedErrors('senha')}">
+				  <div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+					<div th:each="detailedError : ${#fields.detailedErrors()}">
 						<span th:text="${detailedError.message}"></span>
 					</div>
-				</div>-->
+				</div>
 
 				<input type="text" hidden="true" th:field="*{id}"/>
 				<div class="form-group row">
 					<div class="col-10">
 						<input class="form-control"
-							th:classappend="${#fields.hasErrors('nome')} ? alert-danger"
 							type="text" th:field="*{nome}" placeholder="Nome"/>
 					</div>
 				</div>

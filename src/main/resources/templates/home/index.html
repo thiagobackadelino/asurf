@@ -13,18 +13,11 @@
 	th:href="@{/webjars/bootstrap/4.0.0-alpha.6-1/css/bootstrap-theme.min.css}"
 	rel="stylesheet" />
 </head>
-<!-- <body>
-	Usuario logado:
-	<b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b>
-	<form th:action="@{/logout}" method="POST">
-		<input type="submit" value="Logout" />
-	</form>
-</body> -->
+<!--sec:authorize="hasRole('ROLE_ADMIN')" -->
 <body>
 
-<div sec:authorize="hasRole('ROLE_ADMIN')">
 	<div th:include="fragments/header :: header"></div>
-	</div>
+
 	<div class="container"></div>
 
 

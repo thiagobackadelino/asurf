@@ -1,3 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Lista de Usuarios</title>
+<link
+	th:href="@{/webjars/bootstrap/4.0.0-alpha.6-1/css/bootstrap.min.css}"
+	rel="stylesheet" />
+<link
+	th:href="@{/webjars/bootstrap/4.0.0-alpha.6-1/css/bootstrap-theme.min.css}"
+	rel="stylesheet" />
+</head>
+<body>
 	<div th:fragment="header">
 	<nav
 		class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
@@ -10,11 +26,15 @@
 		<a class="navbar-brand" href="#" th:text="${#authentication.name}"></a>
 		<div class="collapse navbar-collapse" id="navbarCollapse">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active"><a class="nav-link" href="/usuarios">Usuarios
+				<li class="nav-item active"><a class="nav-link" href="/usuarios"
+				sec:authorize="hasRole('ROLE_ADMIN')">Usuarios
 				</a></li>
+				<li class="nav-item"><a class="nav-link" href="/roles"
+				sec:authorize="hasRole('ROLE_ADMIN')">Roles</a></li>
 				<li class="nav-item"><a class="nav-link" href="/praias">Praias</a></li>
-				<li class="nav-item"><a class="nav-link" href="/modalidades">Modalidades</a>
-				</li>
+				<li class="nav-item"><a class="nav-link" href="/modalidades">Modalidades</a></li>
+				<li class="nav-item"><a class="nav-link" href="/montaAgenda">Agenda</a></li>
+				<li class="nav-item"><a class="nav-link" href="/eventos">add Evento</a></li>
 			</ul>
 
 			<form th:action="@{/logout}" method="POST"
@@ -24,3 +44,5 @@
 		</div>
 	</nav>
 	</div>
+</body>
+</html>

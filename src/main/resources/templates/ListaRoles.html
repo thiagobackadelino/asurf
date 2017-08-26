@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Lista de Roles</title>
+<link
+	th:href="@{/webjars/bootstrap/4.0.0-alpha.6-1/css/bootstrap.min.css}"
+	rel="stylesheet" />
+<link
+	th:href="@{/webjars/bootstrap/4.0.0-alpha.6-1/css/bootstrap-theme.min.css}"
+	rel="stylesheet" />
+</head>
+<body>
+
+	<div th:include="fragments/header :: header"></div>
+<div class="container">
+	<div class="panel panel-default" style="margin: 10px">
+		<div class="panel-heading">
+			<h1 class="panel-title">Permissoes</h1>
+		</div>
+		<div class="panel-body">
+
+			<form class="form-horizontal" method="POST" th:object="${role}"
+				th:action="@{/roles}">
+				<div class="alert alert-success"
+					th:if="${! #strings.isEmpty(mensagem)}" th:text="${mensagem}"></div>
+
+				  <div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+					<div th:each="detailedError : ${#fields.detailedErrors()}">
+						<span th:text="${detailedError.message}"></span>
+					</div>
+				</div>
+
+				<input type="text" hidden="true" th:field="*{id}"/>
+				<div class="form-group row">
+					<div class="col-10">
+						<input class="form-control"
+							type="text" th:field="*{nome}" placeholder="Nome"/>
+					</div>
+				</div>
+				<button type="submit" class="btn btn-primary">Salvar</button>
+			</form>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Nome</th> 
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="role : ${roles}">
+						<td th:text="${role.id}"></td>
+						<td th:text="${role.nome}"></td> 
+						<td><a th:href="@{/role/editar/{id}(id=${role.id})}">Editar</a></td>
+						<td><a th:href="@{/role/excluir/{id}(id=${role.id})}">Excluir</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

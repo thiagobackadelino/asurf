@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.br.asurf.model.Praia;
+import com.br.asurf.repository.Modalidades;
 import com.br.asurf.repository.Praias; 
  
 
@@ -23,6 +24,9 @@ public class PraiaController {
 	
 	@Autowired
 	private Praias praias;
+	
+	@Autowired
+	private Modalidades modalidades;
 
 	@RequestMapping(value = "/praias", method = RequestMethod.GET)
 	public ModelAndView novo(Praia praia) {
@@ -56,11 +60,36 @@ public class PraiaController {
 		
 	}
 	
+	
+	@RequestMapping(value = "/associarpraiamodalidade", method = RequestMethod.POST)
+	public ModelAndView associarpraiamodalidade(@Valid Praia praia, BindingResult result ,
+			RedirectAttributes attributes) {
+
+		Praia assPraia = 	praias.findOne(praia.getId());
+		assPraia.setModalidades(praia.getModalidades());
+		this.praias.save(assPraia);
+		ModelAndView modelAndView = new ModelAndView("redirect:/praias");
+		attributes.addFlashAttribute("mensagem","Praia salvo com sucesso");
+		return modelAndView;
+		
+		
+	}
+	
     @GetMapping("/praia/editar/{id}")
     public ModelAndView editar(@PathVariable("id") Long id) {
     	ModelAndView modelAndView = new ModelAndView("ListaPraias"); 
     	modelAndView.addObject( this.praias.findOne(id)); 
-		modelAndView.addObject("usuarios", praias.findAll()); 
+		modelAndView.addObject("praias", praias.findAll()); 
+        return modelAndView;
+    }
+	
+	
+    @GetMapping("/praia/associarmodalidade/{id}")
+    public ModelAndView associarmodalidade(@PathVariable("id") Long id) {
+    	ModelAndView modelAndView = new ModelAndView("AssociarPraiaModalidade"); 
+    	modelAndView.addObject( this.praias.findOne(id)); 
+		modelAndView.addObject("praias", praias.findAll()); 
+		modelAndView.addObject("modalidades",modalidades.findAll());
         return modelAndView;
     }
     

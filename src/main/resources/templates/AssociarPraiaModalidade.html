@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Associar Praia Modalidade</title>
+<link
+	th:href="@{/webjars/bootstrap/4.0.0-alpha.6-1/css/bootstrap.min.css}"
+	rel="stylesheet" />
+<link
+	th:href="@{/webjars/bootstrap/4.0.0-alpha.6-1/css/bootstrap-theme.min.css}"
+	rel="stylesheet" />
+</head>
+<body>
+
+	<div th:include="fragments/header :: header"></div>
+	<div class="container">
+		<div class="panel panel-default" style="margin: 10px">
+			<div class="panel-heading">
+				<h1 class="panel-title">Associar Praia Modalidade</h1>
+			</div>
+			<div class="panel-body">
+
+				<form class="form-horizontal" method="POST" th:object="${praia}"
+					th:action="@{/associarpraiamodalidade}">
+					<div class="alert alert-success"
+						th:if="${! #strings.isEmpty(mensagem)}" th:text="${mensagem}"></div>
+
+					<div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+						<div th:each="detailedError : ${#fields.detailedErrors()}">
+							<span th:text="${detailedError.message}"></span>
+						</div>
+					</div>
+
+					<input type="text" hidden="true" th:field="*{id}" />
+					<div class="form-group row">
+						<div class="col-10">
+							<input class="form-control" type="text" th:field="*{nome}"
+								placeholder="Nome" readonly="readonly" />
+						</div>
+					</div>
+
+
+
+					<table class="table">
+						<thead>
+							<tr>
+								<th>modalidade</th>
+								<th>Associar</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="modalidade : ${modalidades}">
+								<td th:text="${modalidade.nome}"></td>
+								<td><input type="checkbox" th:field="*{modalidades}"
+									th:value="${modalidade.id}" /></td>
+							</tr>
+						</tbody>
+					</table>
+					<button type="submit" class="btn btn-primary">Salvar</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

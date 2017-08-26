@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Lista de Roles</title>
+<link
+	th:href="@{/webjars/bootstrap/4.0.0-alpha.6-1/css/bootstrap.min.css}"
+	rel="stylesheet" />
+<link
+	th:href="@{/webjars/bootstrap/4.0.0-alpha.6-1/css/bootstrap-theme.min.css}"
+	rel="stylesheet" />
+	<link th:href="@{/fullcalendar-2.4.0/fullcalendar.min.css}" rel="stylesheet" />
+<script th:src="@{/fullcalendar-2.4.0/lib/jquery.min.js}"></script>
+<script th:src="@{/fullcalendar-2.4.0/lib/moment.min.js}"></script>
+<script th:src="@{/fullcalendar-2.4.0/fullcalendar.min.js}"></script>
+<script th:src="@{/fullcalendar-2.4.0/lang-all.js}"></script>
+<script th:src="@{/agendaEventos.js}"></script>
+	
+</head>
+<style>
+
+body {
+margin: 40px 10px;
+padding: 0;
+font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+font-size: 14px;
+}
+
+#div-agenda-eventos {
+max-width: 900px;
+margin: 0 auto;
+}
+
+</style>
+
+
+
+<body>
+<div th:include="fragments/header :: header"></div>
+<div id="div-agenda-eventos"></div>
+</body>
+</html>

@@ -52,6 +52,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      .usersByUsernameQuery(
       "select nome,senha, ativo from usuarios where nome=?")
      .authoritiesByUsernameQuery(
-      "select u.nome, r.nome from usuarios u join usuario_role ur on u.id = ur.usuario_id join roles r on r.id = ur.role_id where u.nome=?");
+      "select u.nome, r.nome from usuarios u join usuarios_roles ur on u.id = ur.usuarios_id join roles r on r.id = ur.roles_id where u.nome=?");
     } 
 }

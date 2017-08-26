@@ -5,6 +5,8 @@ import java.util.Arrays;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.br.asurf.model.Sexo;
 import com.br.asurf.model.Usuario;
+import com.br.asurf.repository.Roles;
 import com.br.asurf.repository.UsuariosRep;
  
 
@@ -25,12 +28,15 @@ public class UsuarioController {
 	
 	@Autowired
 	private UsuariosRep usuarios;
+	@Autowired
+	private Roles roles;
 
 	@RequestMapping(value = "/usuarios", method = RequestMethod.GET)
 	public ModelAndView novo(Usuario usuario) {
 		ModelAndView modelAndView = new ModelAndView("ListaUsuarios");
 		modelAndView.addObject("usuarios", usuarios.findAll());
 		modelAndView.addObject("sexos", Arrays.asList(Sexo.values()));
+		modelAndView.addObject("roles", roles.findAll());
 		modelAndView.addObject(new Usuario());
 		return modelAndView;
 	}
@@ -41,6 +47,7 @@ public class UsuarioController {
 		ModelAndView modelAndView = new ModelAndView("ListaUsuarios");
 		modelAndView.addObject("usuarios", usuarios.findAll());
 		modelAndView.addObject("sexos", Arrays.asList(Sexo.values()));
+		modelAndView.addObject("roles", roles.findAll());
 		return modelAndView;
 		
 	}
@@ -65,9 +72,12 @@ public class UsuarioController {
     	ModelAndView modelAndView = new ModelAndView("ListaUsuarios"); 
     	modelAndView.addObject( this.usuarios.findOne(id));
     	modelAndView.addObject("sexos", Arrays.asList(Sexo.values()));
+    	modelAndView.addObject("roles", roles.findAll());
 		modelAndView.addObject("usuarios", usuarios.findAll()); 
         return modelAndView;
     }
+    
+
     
     @GetMapping("/usuario/excluir/{id}")
     public ModelAndView excluir(@PathVariable("id") Long id,

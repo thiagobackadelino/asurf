@@ -16,49 +16,75 @@
 <body>
 
 	<div th:include="fragments/header :: header"></div>
+	<div class="container">
+		<div class="panel panel-default" style="margin: 10px">
+			<div class="panel-heading">
+				<h1 class="panel-title">Praias</h1>
+			</div>
+			<div class="panel-body">
 
-	<div class="panel panel-default" style="margin: 10px">
-		<div class="panel-heading">
-			<h1 class="panel-title">Praias</h1>
-		</div>
-		<div class="panel-body">
+				<form class="form-horizontal" method="POST" th:object="${praia}"
+					th:action="@{/praias}">
+					<div class="alert alert-success"
+						th:if="${! #strings.isEmpty(mensagem)}" th:text="${mensagem}"></div>
 
-			<form class="form-horizontal" method="POST" th:object="${praia}"
-				th:action="@{/praias}">
-				<div class="alert alert-success"
-					th:if="${! #strings.isEmpty(mensagem)}" th:text="${mensagem}"></div>
-
-				  <div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
-					<div th:each="detailedError : ${#fields.detailedErrors()}">
-						<span th:text="${detailedError.message}"></span>
+					<div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+						<div th:each="detailedError : ${#fields.detailedErrors()}">
+							<span th:text="${detailedError.message}"></span>
+						</div>
 					</div>
-				</div>
 
-				<input type="text" hidden="true" th:field="*{id}"/>
-				<div class="form-group row">
-					<div class="col-10">
-						<input class="form-control"
-							type="text" th:field="*{nome}" placeholder="Nome"/>
+					<input type="text" hidden="true" th:field="*{id}" />
+					<div class="form-group row">
+						<div class="col-10">
+							<input class="form-control" type="text" th:field="*{nome}"
+								placeholder="Nome" />
+						</div>
 					</div>
-				</div>
-				<button type="submit" class="btn btn-primary">Salvar</button>
-			</form>
-			<table class="table">
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>Nome</th> 
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="praia : ${praias}">
-						<td th:text="${praia.id}"></td>
-						<td th:text="${praia.nome}"></td> 
-						<td><a th:href="@{/praia/editar/{id}(id=${praia.id})}">Editar</a></td>
-						<td><a th:href="@{/praia/excluir/{id}(id=${praia.id})}">Excluir</a></td>
-					</tr>
-				</tbody>
-			</table>
+					<div class="form-group row">
+						<div class="col-10">
+							<input class="form-control" type="text" th:field="*{descricao}"
+								placeholder="Descricao" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-10">
+							<input class="form-control" type="text" th:field="*{latitude}"
+								placeholder="Latitude" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-10">
+							<input class="form-control" type="text" th:field="*{longitude}"
+								placeholder="Longitude" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-10">
+						<label>Ativo</label>
+							<input type="checkbox" th:field="*{ativo}" />
+						</div>
+					</div>
+					<button type="submit" class="btn btn-primary">Salvar</button>
+				</form>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Nome</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="praia : ${praias}">
+							<td th:text="${praia.id}"></td>
+							<td th:text="${praia.nome}"></td>
+							<td><a th:href="@{/praia/editar/{id}(id=${praia.id})}">Editar</a></td>
+							<td><a th:href="@{/praia/excluir/{id}(id=${praia.id})}">Excluir</a></td>
+							<td><a th:href="@{/praia/associarmodalidade/{id}(id=${praia.id})}">Associar</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </body>

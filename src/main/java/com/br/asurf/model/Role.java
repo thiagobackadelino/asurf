@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
@@ -27,11 +28,8 @@ public class Role  implements Serializable {
 	@NotBlank(message = "Nome é obrigatório")
 	private String nome;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
-		@JoinTable(name="usuario_role",
-	             joinColumns={@JoinColumn(name="role_id")},
-	             inverseJoinColumns={@JoinColumn(name="usuario_id")})
-	  private List<Usuario> usuarios;
+	@ManyToMany(mappedBy="roles", targetEntity=Usuario.class, fetch=FetchType.LAZY)
+	 private List<Usuario> usuarios;
 	
 	
 	public Long getId() {

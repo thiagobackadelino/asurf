@@ -3,8 +3,8 @@ package com.br.asurf.model;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -45,7 +45,7 @@ public class Usuario implements Serializable {
 	@NotBlank(message = "Telefone é obrigatório")
 	private String telefone;
 	
-	@ManyToMany(mappedBy="usuarios" ,cascade = CascadeType.ALL)
+	@ManyToMany(fetch=FetchType.LAZY)
 	private List<Role> roles;
 	
 	private boolean ativo = true;

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Lista de Mapa</title>
+<link
+	th:href="@{/webjars/bootstrap/4.0.0-alpha.6-1/css/bootstrap.min.css}"
+	rel="stylesheet" />
+<link
+	th:href="@{/webjars/bootstrap/4.0.0-alpha.6-1/css/bootstrap-theme.min.css}"
+	rel="stylesheet" />
+		<script th:src="@{/fullcalendar-2.4.0/lib/jquery.min.js}"></script>
+<script th:src="@{/fullcalendar-2.4.0/lib/moment.min.js}"></script>
+<script th:src="@{/fullcalendar-2.4.0/fullcalendar.min.js}"></script>
+<script th:src="@{/fullcalendar-2.4.0/lang-all.js}"></script>
+<script type="text/javascript"
+src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;key=AIzaSyD36ef_wnh_2EIjxGoKPndvbsyK9NhDEyc "></script>
+	
+</head>
+<style type="text/css">
+div#map_container{
+	width:600px;
+	height:500px;
+}
+</style>
+
+<script type="text/javascript">
+function loadMap() {
+
+	
+
+
+                $.ajax({
+                   type: "GET",
+                    url: 'mapas.json',
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data);
+                        
+                            var map = new google.maps.Map(document.getElementById('map_container'), {
+                                zoom: 10,
+                                center: new google.maps.LatLng(data[0].latitude, data[0].longitude),
+                                mapTypeId: google.maps.MapTypeId.ROADMAP
+                              });
+                       
+                        
+                        
+                        $.each(data, function (marker, data) {
+                        	 var marker = new google.maps.Marker({
+                        	        position: new google.maps.LatLng(data.latitude, data.longitude),
+                        	        map: map
+                        	      });
+                        	 
+                        	 var infowindow = new google.maps.InfoWindow();
+                        	 
+                        	 google.maps.event.addListener(marker, 'click', (function(marker, data) {
+                        	        return function() {
+                        	          infowindow.setContent(data.nome);
+                        	          infowindow.open(map, marker);
+                        	        }
+                        	      })(marker, data));
+                        	 
+                            });
+                        } 
+                   
+                   
+
+                });
+
+
+};
+</script>
+
+<body onload="loadMap()">
+<div th:include="fragments/header :: header"></div>
+<div id="map_container"></div>
+</body>
+</html>

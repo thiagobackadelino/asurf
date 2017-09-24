@@ -47,8 +47,6 @@ public class AgendaController {
 		
 		String anoAtual = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
 		
-		//Evento.addAll(eventos.findAll());
-		
 		List<Evento> eventosCL =  eventos.findAll();
 		
 		for(int i = 0 ;i <= (eventosCL.size() - 1); i++){
@@ -56,25 +54,7 @@ public class AgendaController {
 			Evento.add(new Evento(eventosCL.get(i).getTitle(),eventosCL.get(i).getStart(),eventosCL.get(i).getEnd(),eventosCL.get(i).getUrl()));
 			
 		}
-				
-//		/*ADICIONANDO OS Evento*/
-//		Evento.add(new Evento("Estudar Linux",     anoAtual+"-"+mesAtual+"-02T12:00:00",anoAtual+"-"+mesAtual+"-02T13:30:00", null));
-//		Evento.add(new Evento("Estudar Java", 	   anoAtual+"-"+mesAtual+"-02T14:00:00",anoAtual+"-"+mesAtual+"-02T14:30:00", null));
-//		Evento.add(new Evento("Estudar C#", 	   anoAtual+"-"+mesAtual+"-02T15:00:00",anoAtual+"-"+mesAtual+"-02T15:30:00", null));
-//		Evento.add(new Evento("Estudar SOA Suite", anoAtual+"-"+mesAtual+"-02T16:00:00",anoAtual+"-"+mesAtual+"-02T17:30:00", null));
-//		Evento.add(new Evento("Estudar Jquery",    anoAtual+"-"+mesAtual+"-02T19:00:00",anoAtual+"-"+mesAtual+"-02T20:30:00", null));		
-//		Evento.add(new Evento("Correr",     	   anoAtual+"-"+mesAtual+"-03T13:00:00",anoAtual+"-"+mesAtual+"-03T13:30:00", null));
-//		Evento.add(new Evento("Reunião",	       anoAtual+"-"+mesAtual+"-05T12:00:00",anoAtual+"-"+mesAtual+"-05T13:30:00", null));		
-//		Evento.add(new Evento("Dois dias de evento", anoAtual+"-"+mesAtual+"-07T12:00:00",anoAtual+"-"+mesAtual+"-08T12:00:00", null));
-//		
-//		Evento.add(new Evento("Publicar Artigo",   anoAtual+"-"+mesAtual+"-10T12:00:00",anoAtual+"-"+mesAtual+"-10T13:30:00", null));
-//		Evento.add(new Evento("Reunião",	       anoAtual+"-"+mesAtual+"-10T15:00:00",anoAtual+"-"+mesAtual+"-10T18:30:00", null));		
-//		
-//		Evento.add(new Evento("Festa",  		   anoAtual+"-"+mesAtual+"-13T12:00:00",anoAtual+"-"+mesAtual+"-13T13:30:00", null));
-//		Evento.add(new Evento("Festa 2",	       anoAtual+"-"+mesAtual+"-13T15:00:00",anoAtual+"-"+mesAtual+"-13T18:30:00", null));		
-//		Evento.add(new Evento("Curso de Inglês",   anoAtual+"-"+mesAtual+"-15",null, null));				
-//		Evento.add(new Evento("Blog Cícero",       anoAtual+"-"+mesAtual+"-23",null, "http://www.ciceroednilson.com.br"));
-//				
+						
 		return Evento;
 		
 	}

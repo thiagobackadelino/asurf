@@ -1,6 +1,8 @@
 package com.br.asurf.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.br.asurf.model.Role;
 import com.br.asurf.model.Sexo;
 import com.br.asurf.model.Usuario;
 import com.br.asurf.repository.Roles;
@@ -45,6 +48,17 @@ public class UsuarioController {
 			RedirectAttributes attributes){
 		
 		ModelAndView modelAndView = new ModelAndView("ListaUsuarios");
+		modelAndView.addObject("usuarios", usuarios.findAll());
+		modelAndView.addObject("sexos", Arrays.asList(Sexo.values()));
+		modelAndView.addObject("roles", roles.findAll());
+		return modelAndView;
+		
+	}
+	
+	public ModelAndView refreshviewCadastro(@Valid Usuario usuario , BindingResult result ,
+			RedirectAttributes attributes){
+		
+		ModelAndView modelAndView = new ModelAndView("CadastroUsuario");
 		modelAndView.addObject("usuarios", usuarios.findAll());
 		modelAndView.addObject("sexos", Arrays.asList(Sexo.values()));
 		modelAndView.addObject("roles", roles.findAll());
@@ -88,6 +102,32 @@ public class UsuarioController {
         return modelAndView;
     }
     
- 
+	@RequestMapping(value = "/cadastrar", method = RequestMethod.GET)
+	public ModelAndView cadastrar(Usuario usuario) {
+		ModelAndView modelAndView = new ModelAndView("CadastroUsuario");
+		modelAndView.addObject("usuarios", usuarios.findAll());
+		modelAndView.addObject("sexos", Arrays.asList(Sexo.values()));
+		modelAndView.addObject("roles", roles.findAll());
+		modelAndView.addObject(new Usuario());
+		return modelAndView;
+	}
 	
+	@RequestMapping(value = "/cadastrar", method = RequestMethod.POST)
+	public ModelAndView cadastrarSalvar(@Valid Usuario usuario, BindingResult result ,
+			RedirectAttributes attributes) {
+		if(result.hasErrors()){
+			return refreshviewCadastro(usuario ,result, attributes);
+		}
+		else{
+		
+		List<Role> roleCL = new ArrayList();
+		roleCL.add(roles.findOne((long) 2));
+		usuario.setRoles(roleCL);
+		this.usuarios.save(usuario);
+		ModelAndView modelAndView = new ModelAndView("redirect:/login");
+		attributes.addFlashAttribute("mensagem","Usuario Cadastrado com sucesso");
+		return modelAndView;
+		}
+		
+	}
 }

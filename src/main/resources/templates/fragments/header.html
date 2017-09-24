@@ -23,7 +23,7 @@
 			aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<a class="navbar-brand" href="#" th:text="${#authentication.name}"></a>
+		<a class="navbar-brand" href="#" >Asurf</a>
 		<div class="collapse navbar-collapse" id="navbarCollapse">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active"><a class="nav-link" href="/usuarios"
@@ -31,10 +31,18 @@
 				</a></li>
 				<li class="nav-item"><a class="nav-link" href="/roles"
 				sec:authorize="hasRole('ROLE_ADMIN')">Roles</a></li>
-				<li class="nav-item"><a class="nav-link" href="/praias">Praias</a></li>
-				<li class="nav-item"><a class="nav-link" href="/modalidades">Modalidades</a></li>
+				<li class="nav-item"><a class="nav-link" href="/praias"
+				sec:authorize="hasRole('ROLE_ADMIN')">Praias</a></li>
+				<li class="nav-item"><a class="nav-link" href="/modalidades"
+				sec:authorize="hasRole('ROLE_ADMIN')">Modalidades</a></li>
+				<sec:authorize ifAllGranted="ROLE_ADMIN,ROLE_USER">
 				<li class="nav-item"><a class="nav-link" href="/montaAgenda">Agenda</a></li>
-				<li class="nav-item"><a class="nav-link" href="/eventos">add Evento</a></li>
+				</sec:authorize>
+				<li class="nav-item"><a class="nav-link" href="/eventos"
+				sec:authorize="hasRole('ROLE_ADMIN')">Evento</a></li>
+				<sec:authorize ifAllGranted="ROLE_ADMIN,ROLE_USER">
+				<li class="nav-item"><a class="nav-link" href="/montaMapa">Mapa</a></li>
+				</sec:authorize>
 			</ul>
 
 			<form th:action="@{/logout}" method="POST"

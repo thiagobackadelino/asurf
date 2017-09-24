@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -58,5 +60,17 @@ public class AgendaController {
 		return Evento;
 		
 	}
+	
+	
+    @GetMapping("/participar/{id}")
+    public ModelAndView editar(@PathVariable("id") String evento) {
+    	ModelAndView modelAndView = new ModelAndView("ParticiparEvento"); 
+    	Evento ev = eventos.evento(evento);
+    	modelAndView.addObject(ev); 
+    	modelAndView.addObject("praias", ev.getPraia()); 
+		modelAndView.addObject("modalidades",ev.getModalidade());
+        return modelAndView;
+    }
+	
 	
 }

@@ -67,24 +67,15 @@ $(document).ready(function() {
 								placeholder="Fim" />
 						</div>
 					</div>
-					<div class="form-group row">
-						<div class="col-10">
-							<input class="form-control" type="text" th:field="*{url}"
-								placeholder="Url" />
-						</div>
-					</div>
 					<table class="table">
 						<thead>
 							<tr>
 								<th>modalidade</th>
-								<th>Associar</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr th:each="modalidade : ${modalidades}">
 								<td th:text="${modalidade.nome}"></td>
-								<td><input type="checkbox" th:field="*{modalidade}"
-									th:value="${modalidade.id}" /></td>
 							</tr>
 						</tbody>
 					</table>
@@ -92,35 +83,17 @@ $(document).ready(function() {
 						<thead>
 							<tr>
 								<th>praia</th>
-								<th>Associar</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr th:each="praia : ${praias}">
 								<td th:text="${praia.nome}"></td>
-								<td><input type="checkbox" th:field="*{praia}"
-									th:value="${praia.id}" /></td>
 							</tr>
 						</tbody>
 					</table>
 					<button type="submit" class="btn btn-primary">Salvar</button>
 				</form>
-				<table class="table">
-					<thead>
-						<tr>
-							<th>ID</th>
-							<th>Titulo</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="evento : ${eventos}">
-							<td th:text="${evento.id}"></td>
-							<td th:text="${evento.title}"></td>
-							<td><a th:href="@{/evento/editar/{id}(id=${evento.id})}">Editar</a></td>
-							<td><a th:href="@{/evento/excluir/{id}(id=${evento.id})}">Excluir</a></td>
-						</tr>
-					</tbody>
-				</table>
+
 			</div>
 		</div>
 	</div>

@@ -1,6 +1,10 @@
 package com.br.asurf.controller;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +59,7 @@ public class EventoController {
 	
 	@RequestMapping(value = "/eventos", method = RequestMethod.POST)
 	public ModelAndView salvar(@Valid Evento evento, BindingResult result ,
-			RedirectAttributes attributes) {
+			RedirectAttributes attributes) throws ParseException {
 		if(result.hasErrors()){
 			return refreshview(evento ,result, attributes);
 		}

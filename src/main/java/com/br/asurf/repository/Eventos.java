@@ -14,4 +14,7 @@ import com.br.asurf.model.Role;
 public interface Eventos extends JpaRepository<Evento, Long> {
 
 
+	@Query("SELECT p FROM Evento p WHERE LOWER(p.title) = LOWER(:nome)")
+    public Evento  evento(@Param("nome") String n);
+	
 }

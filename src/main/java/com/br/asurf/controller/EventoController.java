@@ -65,6 +65,8 @@ public class EventoController {
 		}
 		else{
 			
+		evento.setEnd(evento.getStart());
+			
 		String startDay,startMonth,startYear,dataStart;
 		String endDay,endMonth,endYear,dataEnd;
 		

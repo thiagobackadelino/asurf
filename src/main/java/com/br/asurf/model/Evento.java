@@ -23,6 +23,8 @@ public class Evento   implements Serializable {
 	private String start;
 	private String end;
 	private String url;
+	private String horario;
+	
 	@ManyToOne
 	private Praia praia;
 	
@@ -102,6 +104,14 @@ public class Evento   implements Serializable {
 
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
+	}
+
+	public String getHorario() {
+		return horario;
+	}
+
+	public void setHorario(String horario) {
+		this.horario = horario;
 	}
 	
 	

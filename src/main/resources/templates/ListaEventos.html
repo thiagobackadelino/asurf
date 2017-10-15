@@ -21,8 +21,13 @@
 	
 <script type="text/javascript">
 $(function() {
-    $('#datepickerInicio').datepicker({ format: 'dd/mm/yyyy' });
-    $('#datepickerFim').datepicker({ format: 'dd/mm/yyyy' }).val();
+	var dateToday = new Date(); 
+    $('#datepickerInicio').datepicker({
+    	format: 'dd/mm/yyyy'
+    	});
+    $('#datepickerFim').datepicker({ 
+    	format: 'dd/mm/yyyy'
+    	}).val();
 });
 </script>
 </head>

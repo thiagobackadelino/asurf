@@ -68,25 +68,50 @@ public class EventoController {
 		String startDay,startMonth,startYear,dataStart;
 		String endDay,endMonth,endYear,dataEnd;
 		
-		startDay = evento.getStart().substring(0,2);
-		startMonth =  evento.getStart().substring(3,5);
-		startYear =  evento.getStart().substring(6,10);
-		dataStart = startYear+"/"+startMonth+"/"+startDay;
-		evento.setStart(dataStart);
-		
-		endDay = evento.getEnd().substring(0,2);
-		endMonth =  evento.getEnd().substring(3,5);
-		endYear =  evento.getEnd().substring(6,10);
-		dataEnd = endYear+"/"+endMonth+"/"+endDay;
-		evento.setEnd(dataEnd);
-		
-		evento.setUrl("participar/"+evento.getTitle());
 		
 		
-		this.eventos.save(evento);
-		ModelAndView modelAndView = new ModelAndView("redirect:/eventos");
-		attributes.addFlashAttribute("mensagem","Evento salvo com sucesso");
-		return modelAndView;
+		Date hoje  = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+		String dataH = sdf.format(hoje); 
+		
+		  try {
+
+	            Date dateH = sdf.parse(dataH);
+	            Date dataStartSel = sdf.parse(evento.getStart());
+	            Date dataEndSel = sdf.parse(evento.getEnd());
+	            
+	           if(dataStartSel.before(dateH) || dataEndSel.before(dateH)){
+	       		attributes.addFlashAttribute("mensagem","Atenção selecionar dia maior que o dia atual.");
+	           }else{
+	       		
+	       		startDay = evento.getStart().substring(0,2);
+	       		startMonth =  evento.getStart().substring(3,5);
+	       		startYear =  evento.getStart().substring(6,10);
+	       		dataStart = startYear+"/"+startMonth+"/"+startDay;
+	       		evento.setStart(dataStart);
+	       		
+	       		endDay = evento.getEnd().substring(0,2);
+	       		endMonth =  evento.getEnd().substring(3,5);
+	       		endYear =  evento.getEnd().substring(6,10);
+	       		dataEnd = endYear+"/"+endMonth+"/"+endDay;
+	       		evento.setEnd(dataEnd);
+	       		
+
+	       		
+	       		
+	       		evento.setUrl("participar/"+evento.getTitle());
+	       		
+	       		
+	       		this.eventos.save(evento); 
+	       		attributes.addFlashAttribute("mensagem","Evento salvo com sucesso");
+ 
+	           }
+
+	        } catch (ParseException e) {
+	            e.printStackTrace();
+	        }
+     		ModelAndView modelAndView = new ModelAndView("redirect:/eventos"); 
+     		return modelAndView;
 		}
 		
 	}

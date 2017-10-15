@@ -5,41 +5,16 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width" />
-<title>Lista de Roles</title>
+<title>Lista de Usuarios</title>
 <link
 	th:href="@{/webjars/bootstrap/4.0.0-alpha.6-1/css/bootstrap.min.css}"
 	rel="stylesheet" />
 <link
 	th:href="@{/webjars/bootstrap/4.0.0-alpha.6-1/css/bootstrap-theme.min.css}"
 	rel="stylesheet" />
-	<link th:href="@{/fullcalendar-2.4.0/fullcalendar.min.css}" rel="stylesheet" />
-<script th:src="@{/fullcalendar-2.4.0/lib/jquery.min.js}"></script>
-<script th:src="@{/fullcalendar-2.4.0/lib/moment.min.js}"></script>
-<script th:src="@{/fullcalendar-2.4.0/fullcalendar.js}"></script>
-<script th:src="@{/fullcalendar-2.4.0/lang-all.js}"></script>
-<script th:src="@{/agendaEventos.js}"></script>
-	
 </head>
-<style>
-
-body {
-margin: 40px 10px;
-padding: 0;
-font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-font-size: 14px;
-}
-
-#div-agenda-eventos {
-max-width: 900px;
-margin: 0 auto;
-}
-
-</style>
-
-
-
 <body>
-<nav
+	<nav
 		class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
 		<button class="navbar-toggler navbar-toggler-right" type="button"
 			data-toggle="collapse" data-target="#navbarCollapse"
@@ -74,14 +49,59 @@ margin: 0 auto;
 
 			<form th:action="@{/logout}" method="POST"
 				class="form-inline mt-2 mt-md-0">
-				<input class="btn btn-primary" type="submit" value="Logout" />
+				<input   class="btn btn-primary" type="submit" value="Logout" />
 			</form>
 		</div>
 	</nav>
 	<div class="jumbotron">
 	<div class="container">
-<div id="div-agenda-eventos"></div>
-</div>
-</div>
+	<div class="panel panel-default" style="margin: 10px">
+		<div class="panel-heading">
+			<h1 class="panel-title">Eventos Participantes</h1>
+		</div>
+		<div class="panel-body">
+
+			<form class="form-horizontal" method="POST" th:object="${usuario}"
+				th:action="@{/usuarios}">
+				<div class="alert alert-success"
+					th:if="${! #strings.isEmpty(mensagem)}" th:text="${mensagem}"></div>
+
+				<div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+					<div th:each="detailedError : ${#fields.detailedErrors()}">
+						<span th:text="${detailedError.message}"></span>
+					</div>
+				</div>
+
+				<input type="text" hidden="true" th:field="*{id}" />
+				<div class="form-group row">
+					<div class="col-10">
+						<input  disabled="disabled" class="form-control" type="text" th:field="*{nome}"
+							placeholder="Nome" />
+					</div>
+				</div>
+ 
+			</form>
+			<table class="table" >
+				<thead>
+					<tr>
+						<th>Nome</th>
+						<th>Modalidade</th>
+						<th>Inicio</th>
+						<th>Fim</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="evnt : ${eventosPart}">
+						<td th:text="${evnt.title}"></td>
+						<td th:text="${evnt.modalidade.descricao}"></td>
+						<td th:text="${evnt.start}"></td>
+						<td th:text="${evnt.end}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	</div>
+	</div>
 </body>
 </html>

@@ -15,4 +15,8 @@ public interface UsuariosRep extends JpaRepository<Usuario, Long> {
     public boolean autenticacao(@Param("email") String email,@Param("email") String senha);
 	
 	
+	@Query("SELECT p FROM Usuario p WHERE LOWER(p.nome) = LOWER(:nome)")
+    public Usuario getUsuario(@Param("nome") String nome);
+	
+	
 }

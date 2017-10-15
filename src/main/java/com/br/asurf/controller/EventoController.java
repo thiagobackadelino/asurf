@@ -64,6 +64,25 @@ public class EventoController {
 			return refreshview(evento ,result, attributes);
 		}
 		else{
+			
+		String startDay,startMonth,startYear,dataStart;
+		String endDay,endMonth,endYear,dataEnd;
+		
+		startDay = evento.getStart().substring(0,2);
+		startMonth =  evento.getStart().substring(3,5);
+		startYear =  evento.getStart().substring(6,10);
+		dataStart = startYear+"/"+startMonth+"/"+startDay;
+		evento.setStart(dataStart);
+		
+		endDay = evento.getEnd().substring(0,2);
+		endMonth =  evento.getEnd().substring(3,5);
+		endYear =  evento.getEnd().substring(6,10);
+		dataEnd = endYear+"/"+endMonth+"/"+endDay;
+		evento.setEnd(dataEnd);
+		
+		evento.setUrl("participar/"+evento.getTitle());
+		
+		
 		this.eventos.save(evento);
 		ModelAndView modelAndView = new ModelAndView("redirect:/eventos");
 		attributes.addFlashAttribute("mensagem","Evento salvo com sucesso");

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.br.asurf.model.Evento;
 import com.br.asurf.model.Role;
 import com.br.asurf.model.Sexo;
 import com.br.asurf.model.Usuario;
@@ -41,6 +42,47 @@ public class UsuarioController {
 		modelAndView.addObject("sexos", Arrays.asList(Sexo.values()));
 		modelAndView.addObject("roles", roles.findAll());
 		modelAndView.addObject(new Usuario());
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/eventosPart", method = RequestMethod.GET)
+	public ModelAndView eventosPart(Usuario usuario) {
+		ModelAndView modelAndView = new ModelAndView("EventosPart");
+		
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName(); //get logged in username
+        Usuario user = usuarios.getUsuario(name);
+        
+        for(int i = 0; i < user.getEventos().size();i++ ){
+        	
+        	Evento evxp = user.getEventos().get(i);
+        	
+    		String startDay,startMonth,startYear,dataStart;
+    		String endDay,endMonth,endYear,dataEnd;
+    		
+    		startDay = evxp.getStart().substring(8,10);
+    		startMonth =  evxp.getStart().substring(5,7);
+    		startYear =  evxp.getStart().substring(0,4);
+    		dataStart = startDay+"/"+startMonth+"/"+startYear;
+    		evxp.setStart(dataStart);
+    		
+    		user.getEventos().get(i).setStart(evxp.getStart());
+    		
+    		endDay = evxp.getEnd().substring(8,10);
+    		endMonth =  evxp.getEnd().substring(5,7);
+    		endYear =  evxp.getEnd().substring(0,4);
+    		dataEnd = endDay+"/"+endMonth+"/"+endYear;
+    		evxp.setEnd(dataEnd);
+        	
+    		user.getEventos().get(i).setEnd(evxp.getEnd());
+        	
+        }
+        
+        
+        
+        modelAndView.addObject("eventosPart", user.getEventos());
+		modelAndView.addObject(user);
 		return modelAndView;
 	}
 	

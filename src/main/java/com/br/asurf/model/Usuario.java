@@ -48,6 +48,9 @@ public class Usuario implements Serializable {
 	@ManyToMany(fetch=FetchType.LAZY)
 	private List<Role> roles;
 	
+	@ManyToMany(fetch=FetchType.LAZY)
+	private List<Evento> eventos;
+	
 	private boolean ativo = true;
 	
 	public Long getId() {
@@ -122,6 +125,14 @@ public class Usuario implements Serializable {
 		this.ativo = ativo;
 	}
 
+	public List<Evento> getEventos() {
+		return eventos;
+	}
+
+	public void setEventos(List<Evento> eventos) {
+		this.eventos = eventos;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -129,6 +140,7 @@ public class Usuario implements Serializable {
 		result = prime * result + (ativo ? 1231 : 1237);
 		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((eventos == null) ? 0 : eventos.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		result = prime * result + ((roles == null) ? 0 : roles.hashCode());
@@ -159,6 +171,11 @@ public class Usuario implements Serializable {
 				return false;
 		} else if (!email.equals(other.email))
 			return false;
+		if (eventos == null) {
+			if (other.eventos != null)
+				return false;
+		} else if (!eventos.equals(other.eventos))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -188,6 +205,8 @@ public class Usuario implements Serializable {
 			return false;
 		return true;
 	}
+
+
 
 	
 	

@@ -35,13 +35,16 @@
 				sec:authorize="hasRole('ROLE_ADMIN')">Praias</a></li>
 				<li class="nav-item"><a class="nav-link" href="/modalidades"
 				sec:authorize="hasRole('ROLE_ADMIN')">Modalidades</a></li>
-				<sec:authorize ifAllGranted="ROLE_ADMIN,ROLE_USER">
-				<li class="nav-item"><a class="nav-link" href="/montaAgenda">Agenda</a></li>
-				</sec:authorize>
 				<li class="nav-item"><a class="nav-link" href="/eventos"
 				sec:authorize="hasRole('ROLE_ADMIN')">Evento</a></li>
 				<sec:authorize ifAllGranted="ROLE_ADMIN,ROLE_USER">
+				<li class="nav-item"><a class="nav-link" href="/montaAgenda">Agenda</a></li>
+				</sec:authorize>
+				<sec:authorize ifAllGranted="ROLE_ADMIN,ROLE_USER">
 				<li class="nav-item"><a class="nav-link" href="/montaMapa">Mapa</a></li>
+				</sec:authorize>
+				<sec:authorize ifAllGranted="ROLE_USER">
+				<li class="nav-item"><a class="nav-link" href="/eventosPart">Eventos Participantes</a></li>
 				</sec:authorize>
 			</ul>
 

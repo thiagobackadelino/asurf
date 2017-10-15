@@ -14,10 +14,27 @@
 	rel="stylesheet" />
 </head>
 <body>
-
+<nav
+		class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+		<button class="navbar-toggler navbar-toggler-right" type="button"
+			data-toggle="collapse" data-target="#navbarCollapse"
+			aria-controls="navbarCollapse" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<a class="navbar-brand" href="#" >Asurf</a>
+		<div class="collapse navbar-collapse" id="navbarCollapse">
+			<form th:action="@{/logout}" method="POST"
+				class="form-inline mt-2 mt-md-0">
+				
+			</form>
+		</div>
+	</nav>
+	<div class="jumbotron">
+	<div class="container">
 	<div class="panel panel-default" style="margin: 10px">
 		<div class="panel-heading">
-			<h1 class="panel-title">Usuarios</h1>
+			<h1 class="panel-title">Cadastro</h1>
 		</div>
 		<div class="panel-body">
 
@@ -80,5 +97,6 @@
 	
 		</div>
 	</div>
+	</div></div>
 </body>
 </html>

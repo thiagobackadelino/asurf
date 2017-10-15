@@ -1,10 +1,13 @@
 package com.br.asurf.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -25,6 +28,9 @@ public class Evento   implements Serializable {
 	
 	@ManyToOne
 	private Modalidade modalidade;
+	
+	@ManyToMany(mappedBy="eventos", targetEntity=Usuario.class, fetch=FetchType.LAZY)
+	 private List<Usuario> usuarios;
 	
 	
 	public Evento(){
@@ -89,6 +95,16 @@ public class Evento   implements Serializable {
 	public void setModalidade(Modalidade modalidade) {
 		this.modalidade = modalidade;
 	}
+
+	public List<Usuario> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
+	
+	
 	
 	
 }

@@ -20,15 +20,53 @@
 
 	
 <script type="text/javascript">
-$(document).ready(function() {
-    $('#datepickerInicio').datepicker();
-    $('#datepickerFim').datepicker();
+$(function() {
+    $('#datepickerInicio').datepicker({ format: 'dd/mm/yyyy' });
+    $('#datepickerFim').datepicker({ format: 'dd/mm/yyyy' }).val();
 });
 </script>
 </head>
 <body>
+	<nav
+		class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+		<button class="navbar-toggler navbar-toggler-right" type="button"
+			data-toggle="collapse" data-target="#navbarCollapse"
+			aria-controls="navbarCollapse" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<a class="navbar-brand" href="#" >Asurf</a>
+		<div class="collapse navbar-collapse" id="navbarCollapse">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><a class="nav-link" href="/usuarios"
+				sec:authorize="hasRole('ROLE_ADMIN')">Usuarios
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="/roles"
+				sec:authorize="hasRole('ROLE_ADMIN')">Roles</a></li>
+				<li class="nav-item"><a class="nav-link" href="/praias"
+				sec:authorize="hasRole('ROLE_ADMIN')">Praias</a></li>
+				<li class="nav-item"><a class="nav-link" href="/modalidades"
+				sec:authorize="hasRole('ROLE_ADMIN')">Modalidades</a></li>
+				<li class="nav-item"><a class="nav-link" href="/eventos"
+				sec:authorize="hasRole('ROLE_ADMIN')">Evento</a></li>
+				<sec:authorize ifAllGranted="ROLE_ADMIN,ROLE_USER">
+				<li class="nav-item"><a class="nav-link" href="/montaAgenda">Agenda</a></li>
+				</sec:authorize>
+				<sec:authorize ifAllGranted="ROLE_ADMIN,ROLE_USER">
+				<li class="nav-item"><a class="nav-link" href="/montaMapa">Mapa</a></li>
+				</sec:authorize>
+				<sec:authorize ifAllGranted="ROLE_USER">
+				<li class="nav-item"><a class="nav-link" href="/eventosPart">Eventos Participantes</a></li>
+				</sec:authorize>
+			</ul>
 
-	<div th:include="fragments/header :: header"></div>
+			<form th:action="@{/logout}" method="POST"
+				class="form-inline mt-2 mt-md-0">
+				<input class="btn btn-primary" type="submit" value="Logout" />
+			</form>
+		</div>
+	</nav>
+	<div class="jumbotron">
 	<div class="container">
 		<div class="panel panel-default" style="margin: 10px">
 			<div class="panel-heading">
@@ -65,12 +103,6 @@ $(document).ready(function() {
 						<div class="col-10">
 							<input class="form-control" type="text" th:field="*{end}" id="datepickerFim" 
 								placeholder="Fim" />
-						</div>
-					</div>
-					<div class="form-group row">
-						<div class="col-10">
-							<input class="form-control" type="text" th:field="*{url}"
-								placeholder="Url" />
 						</div>
 					</div>
 					<table class="table">
@@ -123,6 +155,7 @@ $(document).ready(function() {
 				</table>
 			</div>
 		</div>
+	</div>
 	</div>
 </body>
 </html>

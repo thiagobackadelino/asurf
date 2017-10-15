@@ -123,12 +123,13 @@ public class AgendaController {
          
          if(!possuiEvento(eventossAnte,evento)){
         	 if(evntp.getUsuarios().size() <= 5){
-        		 attributes.addFlashAttribute("mensagem","Vagas Não Disponiveis");
+                 eventossAnte.add(evntp);
+                 user.setEventos(eventossAnte); 
+                 this.usuarios.save(user);
+                 attributes.addFlashAttribute("mensagem","Participação incluida com sucesso");
+        		 
         	 }else{
-         eventossAnte.add(evntp);
-         user.setEventos(eventossAnte); 
-         this.usuarios.save(user);
-         attributes.addFlashAttribute("mensagem","Participação incluida com sucesso");
+        		 attributes.addFlashAttribute("mensagem","Vagas Não Disponiveis");
         	 }
          }else{
         	 attributes.addFlashAttribute("mensagem","Atenção você ja está participando desse evento!");

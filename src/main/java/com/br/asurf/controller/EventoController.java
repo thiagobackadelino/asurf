@@ -57,15 +57,17 @@ public class EventoController {
 		
 	}
 	
-	@RequestMapping(value = "/eventos", method = RequestMethod.POST)
-	public ModelAndView salvar(@Valid Evento evento, BindingResult result ,
+	@RequestMapping(value = "/eventos/{id}", method = RequestMethod.POST)
+	public ModelAndView salvar(@Valid Evento evento, BindingResult result ,@PathVariable("id") String id,
 			RedirectAttributes attributes) throws ParseException {
 		if(result.hasErrors()){
 			return refreshview(evento ,result, attributes);
 		}
 		else{
 			
-		evento.setEnd(evento.getStart());
+		//evento.setEnd(evento.getStart());
+
+		String datX = id.replaceAll("-","/");
 			
 		String startDay,startMonth,startYear,dataStart;
 		String endDay,endMonth,endYear,dataEnd;
@@ -79,24 +81,25 @@ public class EventoController {
 		  try {
 
 	            Date dateH = sdf.parse(dataH);
-	            Date dataStartSel = sdf.parse(evento.getStart());
-	            Date dataEndSel = sdf.parse(evento.getEnd());
+	            Date dataStartSel = sdf.parse(datX);
+	            Date dataEndSel = sdf.parse(datX);
 	            
 	           if(dataStartSel.before(dateH) || dataEndSel.before(dateH)){
 	       		attributes.addFlashAttribute("mensagem","Atenção selecionar dia maior que o dia atual.");
 	           }else{
 	       		
-	       		startDay = evento.getStart().substring(0,2);
-	       		startMonth =  evento.getStart().substring(3,5);
-	       		startYear =  evento.getStart().substring(6,10);
+	        	
+	       		startDay = datX.substring(0,2);
+	       		startMonth =  datX.substring(3,5);
+	       		startYear =  datX.substring(6,10);
 	       		dataStart = startYear+"/"+startMonth+"/"+startDay;
-	       		evento.setStart(dataStart);
+	       		evento.setStart(dataStart+' '+evento.getStart());
 	       		
-	       		endDay = evento.getEnd().substring(0,2);
-	       		endMonth =  evento.getEnd().substring(3,5);
-	       		endYear =  evento.getEnd().substring(6,10);
+	       		endDay = datX.substring(0,2);
+	       		endMonth =  datX.substring(3,5);
+	       		endYear =  datX.substring(6,10);
 	       		dataEnd = endYear+"/"+endMonth+"/"+endDay;
-	       		evento.setEnd(dataEnd);
+	       		evento.setEnd(dataEnd+' '+evento.getEnd());
 	       		
 
 	       		
@@ -112,7 +115,7 @@ public class EventoController {
 	        } catch (ParseException e) {
 	            e.printStackTrace();
 	        }
-     		ModelAndView modelAndView = new ModelAndView("redirect:/eventos"); 
+     		ModelAndView modelAndView = new ModelAndView("redirect:/montaAgenda"); 
      		return modelAndView;
 		}
 		
@@ -183,11 +186,13 @@ public class EventoController {
 		startYear =  id.substring(0,4);
 		dataStart = startDay+"/"+startMonth+"/"+startYear;
     	
-    	
+	 
     	Evento ev = new Evento();
-    	ev.setStart(dataStart);
+    	//ev.setStart(dataStart);
+    	//ev.setEnd(dataStart);
     	
-    	modelAndView.addObject( ev);  
+    	modelAndView.addObject( ev);
+    	modelAndView.addObject("diaSel", dataStart.replaceAll("/","-"));
 		modelAndView.addObject("eventos", eventos.eventosDodia(datX)); 
 		modelAndView.addObject("modalidades", modalidades.findAll()); 
 		modelAndView.addObject("praias", praias.findAll()); 

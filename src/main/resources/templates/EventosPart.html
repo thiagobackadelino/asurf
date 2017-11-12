@@ -86,7 +86,6 @@
 						<th>Modalidade</th>
 						<th>Status</th>
 						<th>Inicio</th>
-						<th>Horario</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -96,7 +95,6 @@
 						<td th:if="${evnt.ativo}">Confirmado</td>
 						<td th:if="${!evnt.ativo}">Cancelado</td>
 						<td th:text="${evnt.start}"></td>
-						<td th:text="${evnt.horario}"></td>
 					</tr>
 				</tbody>
 			</table>

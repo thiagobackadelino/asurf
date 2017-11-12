@@ -18,6 +18,6 @@ public interface Eventos extends JpaRepository<Evento, Long> {
     public Evento  evento(@Param("nome") String n);
 	
 	
-	@Query("SELECT p FROM Evento p WHERE LOWER(p.start) = LOWER(:id)")
+	@Query("SELECT p FROM Evento p WHERE p.start like CONCAT('%',:id,'%')")
     public List<Evento>   eventosDodia(@Param("id") String n);
 }

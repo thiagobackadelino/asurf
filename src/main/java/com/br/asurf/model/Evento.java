@@ -23,7 +23,6 @@ public class Evento   implements Serializable {
 	private String start;
 	private String end;
 	private String url;
-	private String horario;
 	private boolean ativo = true;
 	
 	private Long vagas;
@@ -109,13 +108,7 @@ public class Evento   implements Serializable {
 		this.usuarios = usuarios;
 	}
 
-	public String getHorario() {
-		return horario;
-	}
-
-	public void setHorario(String horario) {
-		this.horario = horario;
-	}
+ 
 
 	public Long getVagas() {
 		return vagas;

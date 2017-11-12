@@ -54,11 +54,30 @@ function loadMap() {
                         	        map: map
                         	      });
                         	 
+
+                        	 
                         	 var infowindow = new google.maps.InfoWindow();
                         	 
                         	 google.maps.event.addListener(marker, 'click', (function(marker, data) {
                         	        return function() {
-                        	          infowindow.setContent(data.nome);
+                        	        	
+                                  	  var content = '<div id="iw-container">' +
+                                      '<div class="iw-title">Praia '+ data.nome+'</div>' +
+                                      '<div class="iw-content">' +
+                                        '<div class="iw-subTitle"></div>' +
+                                        '<img src="'+data.imagem+'"  height="115" width="83"></img>' +
+                                        '<p>'+data.descricao+'</p>' +
+                                        '<div class="iw-subTitle">Dificuldade</div>' +
+                                        '<p>'+
+                                        ''+data.dificuldade+'</p>'+
+                                      '</div>' +
+                                      '<div class="iw-bottom-gradient"></div>' +
+                                    '</div>';	
+                        	        	
+                        	        	
+                        	        	
+                        	        	
+                        	          infowindow.setContent(content);
                         	          infowindow.open(map, marker);
                         	        }
                         	      })(marker, data));
@@ -83,7 +102,7 @@ function loadMap() {
 			aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<a class="navbar-brand" href="#" >Asurf</a>
+		<a class="navbar-brand" href="/home" >Asurf</a>
 		<div class="collapse navbar-collapse" id="navbarCollapse">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active"><a class="nav-link" href="/usuarios"
@@ -95,8 +114,6 @@ function loadMap() {
 				sec:authorize="hasRole('ROLE_ADMIN')">Praias</a></li>
 				<li class="nav-item"><a class="nav-link" href="/modalidades"
 				sec:authorize="hasRole('ROLE_ADMIN')">Modalidades</a></li>
-				<li class="nav-item"><a class="nav-link" href="/eventos"
-				sec:authorize="hasRole('ROLE_ADMIN')">Evento</a></li>
 				<sec:authorize ifAllGranted="ROLE_ADMIN,ROLE_USER">
 				<li class="nav-item"><a class="nav-link" href="/montaAgenda">Agenda</a></li>
 				</sec:authorize>

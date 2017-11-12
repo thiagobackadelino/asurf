@@ -10534,7 +10534,7 @@ var BasicView = View.extend({
 
 		return '' +
 			'<td class="' + classes.join(' ') + '" data-date="' + date.format() + '">' +
-				date.date() +
+			'<a href="/evento/agendaEditar/'+ date.format() +'" >'+date.date()+'</a>' +
 			'</td>';
 	},
 

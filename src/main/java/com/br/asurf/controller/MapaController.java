@@ -50,6 +50,8 @@ public class MapaController {
 			praiaB.setNome(praiasCL.get(i).getNome());
 			praiaB.setLatitude(praiasCL.get(i).getLatitude());
 			praiaB.setLongitude(praiasCL.get(i).getLongitude());
+			praiaB.setDificuldade(praiasCL.get(i).getDificuldade());
+			praiaB.setImagem(praiasCL.get(i).getImagem());
 			praia.add(praiaB);
 		}
 						

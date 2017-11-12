@@ -38,7 +38,7 @@ $(function() {
 			aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<a class="navbar-brand" href="#" >Asurf</a>
+		<a class="navbar-brand" href="/home" >Asurf</a>
 		<div class="collapse navbar-collapse" id="navbarCollapse">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active"><a class="nav-link" href="/usuarios"
@@ -50,8 +50,6 @@ $(function() {
 				sec:authorize="hasRole('ROLE_ADMIN')">Praias</a></li>
 				<li class="nav-item"><a class="nav-link" href="/modalidades"
 				sec:authorize="hasRole('ROLE_ADMIN')">Modalidades</a></li>
-				<li class="nav-item"><a class="nav-link" href="/eventos"
-				sec:authorize="hasRole('ROLE_ADMIN')">Evento</a></li>
 				<sec:authorize ifAllGranted="ROLE_ADMIN,ROLE_USER">
 				<li class="nav-item"><a class="nav-link" href="/montaAgenda">Agenda</a></li>
 				</sec:authorize>
@@ -98,15 +96,27 @@ $(function() {
 
 					<div class="form-group row">
 						<div class="col-10">
-							<input class="form-control" type="text" th:field="*{start}"  id="datepickerInicio" 
+							<input class="form-control" type="text" th:field="*{start}"   
 								placeholder="Inicio"  />
 						</div>
 					</div>
 					
 					<div class="form-group row">
 						<div class="col-10">
-							<input class="form-control" type="text" th:field="*{horario}"  id="datepickerInicio" 
+							<input class="form-control" type="text" th:field="*{horario}" 
 								placeholder="Horario"  />
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-10">
+							<input class="form-control" type="text" th:field="*{vagas}"  
+								placeholder="Quantidade de vagas"  />
+						</div>
+					</div>
+					<div class="form-group row"  sec:authorize="hasRole('ROLE_ADMIN')">
+						<div class="col-10">
+						<label>Ativo</label>
+							<input type="checkbox" th:field="*{ativo}" />
 						</div>
 					</div>
 					<table class="table">
@@ -153,7 +163,8 @@ $(function() {
 							<td th:text="${evento.id}"></td>
 							<td th:text="${evento.title}"></td>
 							<td><a th:href="@{/evento/editar/{id}(id=${evento.id})}">Editar</a></td>
-							<td><a th:href="@{/evento/excluir/{id}(id=${evento.id})}">Excluir</a></td>
+							<td><a th:href="@{/evento/cancelar/{id}(id=${evento.id})}">Cancelar</a></td>
+							<td><a th:href="@{/evento/participantes/{id}(id=${evento.id})}">Participantes</a></td>
 						</tr>
 					</tbody>
 				</table>

@@ -86,6 +86,45 @@ public class UsuarioController {
 		return modelAndView;
 	}
 	
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public ModelAndView home(Usuario usuario) {
+		ModelAndView modelAndView = new ModelAndView("Notificacao");
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName(); //get logged in username
+        Usuario user = usuarios.getUsuario(name);
+        
+        List<Evento> eventos =  new ArrayList();
+        
+        for(int i = 0 ;i <= (user.getEventos().size() - 1 ); i++) {
+        
+        Evento ev = user.getEventos().get(i);
+        
+		String startDay,startMonth,startYear,dataStart;
+		String endDay,endMonth,endYear,dataEnd;
+		
+		startDay = ev.getStart().substring(8,10);
+		startMonth =  ev.getStart().substring(5,7);
+		startYear =  ev.getStart().substring(0,4);
+		dataStart = startDay+"/"+startMonth+"/"+startYear;
+		ev.setStart(dataStart);
+		
+		endDay = ev.getEnd().substring(8,10);
+		endMonth =  ev.getEnd().substring(5,7);
+		endYear =  ev.getEnd().substring(0,4);
+		dataEnd = endDay+"/"+endMonth+"/"+endYear;
+		ev.setEnd(dataEnd);
+		
+		eventos.add(ev);
+		
+        }
+        
+        
+        
+        modelAndView.addObject("eventosPart", eventos);
+		modelAndView.addObject(user);
+		return modelAndView;
+	}
+	
 	public ModelAndView refreshview(@Valid Usuario usuario , BindingResult result ,
 			RedirectAttributes attributes){
 		
@@ -115,6 +154,11 @@ public class UsuarioController {
 			return refreshview(usuario ,result, attributes);
 		}
 		else{
+		List<Evento> ex = this.usuarios.findOne(usuario.getId()).getEventos();	
+		
+		
+		usuario.setEventos(ex);
+		
 		this.usuarios.save(usuario);
 		ModelAndView modelAndView = new ModelAndView("redirect:/usuarios");
 		attributes.addFlashAttribute("mensagem","Usuario salvo com sucesso");

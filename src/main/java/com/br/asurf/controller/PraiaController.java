@@ -1,6 +1,8 @@
 package com.br.asurf.controller;
 
 
+import java.util.Arrays;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.br.asurf.model.Dificuldade;
 import com.br.asurf.model.Praia;
+import com.br.asurf.model.Sexo;
 import com.br.asurf.repository.Modalidades;
 import com.br.asurf.repository.Praias; 
  
@@ -32,6 +36,7 @@ public class PraiaController {
 	public ModelAndView novo(Praia praia) {
 		ModelAndView modelAndView = new ModelAndView("ListaPraias");
 		modelAndView.addObject("praias", praias.findAll()); 
+		modelAndView.addObject("dificuldades", Arrays.asList(Dificuldade.values()));
 		modelAndView.addObject(new Praia());
 		return modelAndView;
 	}
@@ -40,7 +45,8 @@ public class PraiaController {
 			RedirectAttributes attributes){
 		
 		ModelAndView modelAndView = new ModelAndView("ListaPraias");
-		modelAndView.addObject("praias", praias.findAll()); 
+		modelAndView.addObject("praias", praias.findAll());
+		modelAndView.addObject("dificuldades", Arrays.asList(Dificuldade.values()));
 		return modelAndView;
 		
 	}
@@ -80,6 +86,7 @@ public class PraiaController {
     	ModelAndView modelAndView = new ModelAndView("ListaPraias"); 
     	modelAndView.addObject( this.praias.findOne(id)); 
 		modelAndView.addObject("praias", praias.findAll()); 
+		modelAndView.addObject("dificuldades", Arrays.asList(Dificuldade.values()));
         return modelAndView;
     }
 	
@@ -96,10 +103,18 @@ public class PraiaController {
     @GetMapping("/praia/excluir/{id}")
     public ModelAndView excluir(@PathVariable("id") Long id,
 			RedirectAttributes attributes) {
-    	this.praias.delete(id);
-		ModelAndView modelAndView = new ModelAndView("redirect:/praias"); 
-		attributes.addFlashAttribute("mensagem","Praia excluida com sucesso");
-        return modelAndView;
+    	if(this.praias.findOne(id).getEventos().size() >= 1) {
+    		ModelAndView modelAndView = new ModelAndView("redirect:/praias"); 
+    		attributes.addFlashAttribute("mensagem","Praia não excluida, Eventos associoados!");
+            return modelAndView;
+    		
+    	}else {
+    		this.praias.delete(id);
+    		ModelAndView modelAndView = new ModelAndView("redirect:/praias"); 
+    		attributes.addFlashAttribute("mensagem","Praia excluida com sucesso");
+            return modelAndView;
+    	}
+    	
     }
     
  

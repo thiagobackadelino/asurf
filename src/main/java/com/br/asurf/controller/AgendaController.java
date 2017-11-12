@@ -59,9 +59,20 @@ public class AgendaController {
 		
 		List<Evento> eventosCL =  eventos.findAll();
 		
-		for(int i = 0 ;i <= (eventosCL.size() - 1); i++){
+		List<Evento> EventoX = new ArrayList();
+		
+		for(int i = 0 ;i <= (eventosCL.size() - 1 ); i++){
+			if(eventosCL.get(i).isAtivo()) {
+				EventoX.add(eventosCL.get(i));
+			}
 			
-			Evento.add(new Evento(eventosCL.get(i).getTitle(),eventosCL.get(i).getStart(),eventosCL.get(i).getEnd(),eventosCL.get(i).getUrl()));
+		}
+			
+		
+		
+		for(int i = 0 ;i <= (EventoX.size()  - 1 ); i++){
+			
+			Evento.add(new Evento(EventoX.get(i).getTitle(),EventoX.get(i).getStart(),EventoX.get(i).getEnd(),EventoX.get(i).getUrl()));
 			
 		}
 						
@@ -122,7 +133,7 @@ public class AgendaController {
 
          
          if(!possuiEvento(eventossAnte,evento)){
-        	 if(evntp.getUsuarios().size() <= 5){
+        	 if(evntp.getUsuarios().size() < evntp.getVagas()){
                  eventossAnte.add(evntp);
                  user.setEventos(eventossAnte); 
                  this.usuarios.save(user);

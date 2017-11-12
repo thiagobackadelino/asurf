@@ -22,7 +22,7 @@
 			aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<a class="navbar-brand" href="#" >Asurf</a>
+		<a class="navbar-brand" href="/home" >Asurf</a>
 		<div class="collapse navbar-collapse" id="navbarCollapse">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active"><a class="nav-link" href="/usuarios"
@@ -34,8 +34,6 @@
 				sec:authorize="hasRole('ROLE_ADMIN')">Praias</a></li>
 				<li class="nav-item"><a class="nav-link" href="/modalidades"
 				sec:authorize="hasRole('ROLE_ADMIN')">Modalidades</a></li>
-				<li class="nav-item"><a class="nav-link" href="/eventos"
-				sec:authorize="hasRole('ROLE_ADMIN')">Evento</a></li>
 				<sec:authorize ifAllGranted="ROLE_ADMIN,ROLE_USER">
 				<li class="nav-item"><a class="nav-link" href="/montaAgenda">Agenda</a></li>
 				</sec:authorize>
@@ -71,19 +69,23 @@
 						<span th:text="${detailedError.message}"></span>
 					</div>
 				</div>
-
 				<input type="text" hidden="true" th:field="*{id}" />
-				<div class="form-group row">
+				<div class="form-group row" th:if="${id eq null }" >
 					<div class="col-10">
 						<input class="form-control" type="text" th:field="*{nome}"
 							placeholder="Nome" />
 					</div>
 				</div>
-				<div class="form-group row ">
+				<div class="form-group row" th:if="${id > 0 } " >
 					<div class="col-10">
-						<input class="form-control" type="password" th:field="*{senha}"
-							placeholder="Senha" />
-
+						<span   th:text="${usuario.nome}"></span>
+							<input type="text" hidden="true" th:field="*{nome}" />
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-10">
+						<input class="form-control" type="text" th:field="*{idade}"
+							placeholder="Idade" />
 					</div>
 				</div>
 				<div class="form-group  row">
@@ -101,11 +103,17 @@
 
 					</div>
 				</div>
-				<div class="form-group row ">
+				<div class="form-group row "  th:if="${id eq null }">
 					<div class="col-10">
 						<input class="form-control" type="text" th:field="*{cpf}"
 							placeholder="CPF" />
 
+					</div>
+				</div>
+				<div class="form-group row "  th:if="${id > 0 }">
+					<div class="col-10">
+						<span   th:text="${usuario.cpf}"></span>
+					<input type="text" hidden="true" th:field="*{cpf}" />
 					</div>
 				</div>
 				<div class="form-group row ">
@@ -128,9 +136,16 @@
 						</label>
 					</div>
 				</div>
+				<div class="form-group row ">
+					<div class="col-10">
+						<input class="form-control" type="password" th:field="*{senha}"
+							placeholder="Senha" />
+
+					</div>
+				</div>
 				<button type="submit" class="btn btn-primary">Salvar</button>
 			</form>
-			<table class="table" sec:authorize="hasRole('ROLE_ADMIN')">
+			 <table class="table" sec:authorize="hasRole('ROLE_ADMIN')">
 				<thead>
 					<tr>
 						<th>ID</th>
@@ -149,7 +164,10 @@
 						<td><a th:href="@{/usuario/excluir/{id}(id=${usuario.id})}">Excluir</a></td>
 					</tr>
 				</tbody>
-			</table>
+			</table> 
+			<!--<select>
+			<option th:each="usuario : ${usuarios}" th:text="${usuario.nome}"></option>
+			</select>-->
 		</div>
 	</div>
 	</div>

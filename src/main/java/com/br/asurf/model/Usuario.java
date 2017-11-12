@@ -53,6 +53,8 @@ public class Usuario implements Serializable {
 	
 	private boolean ativo = true;
 	
+	private Long idade;
+	
 	public Long getId() {
 		return id;
 	}
@@ -131,6 +133,14 @@ public class Usuario implements Serializable {
 
 	public void setEventos(List<Evento> eventos) {
 		this.eventos = eventos;
+	}
+	
+	public Long getIdade() {
+		return idade;
+	}
+
+	public void setIdade(Long idade) {
+		this.idade = idade;
 	}
 
 	@Override

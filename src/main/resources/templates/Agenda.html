@@ -47,7 +47,7 @@ margin: 0 auto;
 			aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<a class="navbar-brand" href="#" >Asurf</a>
+		<a class="navbar-brand" href="/home" >Asurf</a>
 		<div class="collapse navbar-collapse" id="navbarCollapse">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active"><a class="nav-link" href="/usuarios"
@@ -59,8 +59,6 @@ margin: 0 auto;
 				sec:authorize="hasRole('ROLE_ADMIN')">Praias</a></li>
 				<li class="nav-item"><a class="nav-link" href="/modalidades"
 				sec:authorize="hasRole('ROLE_ADMIN')">Modalidades</a></li>
-				<li class="nav-item"><a class="nav-link" href="/eventos"
-				sec:authorize="hasRole('ROLE_ADMIN')">Evento</a></li>
 				<sec:authorize ifAllGranted="ROLE_ADMIN,ROLE_USER">
 				<li class="nav-item"><a class="nav-link" href="/montaAgenda">Agenda</a></li>
 				</sec:authorize>

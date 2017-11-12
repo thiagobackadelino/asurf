@@ -37,6 +37,10 @@ public class Praia implements Serializable {
 	
 	private boolean ativo;
 	
+	private String imagem;
+	
+	private Dificuldade dificuldade;
+	
 	@OneToMany(mappedBy="praia", targetEntity=Evento.class, fetch=FetchType.LAZY)
 	private List<Evento> eventos;
 	
@@ -107,8 +111,32 @@ public class Praia implements Serializable {
 		this.eventos = evento;
 	}
 
+	public Dificuldade getDificuldade() {
+		return dificuldade;
+	}
+
+	public void setDificuldade(Dificuldade dificuldade) {
+		this.dificuldade = dificuldade;
+	}
+
+	public List<Evento> getEventos() {
+		return eventos;
+	}
+
+	public void setEventos(List<Evento> eventos) {
+		this.eventos = eventos;
+	}
+
+	public String getImagem() {
+		return imagem;
+	}
+
+	public void setImagem(String imagem) {
+		this.imagem = imagem;
+	}
 
 
+	
 	
 	
 	

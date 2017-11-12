@@ -22,7 +22,7 @@
 			aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<a class="navbar-brand" href="#" >Asurf</a>
+		<a class="navbar-brand" href="/home" >Asurf</a>
 		<div class="collapse navbar-collapse" id="navbarCollapse">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active"><a class="nav-link" href="/usuarios"
@@ -34,8 +34,6 @@
 				sec:authorize="hasRole('ROLE_ADMIN')">Praias</a></li>
 				<li class="nav-item"><a class="nav-link" href="/modalidades"
 				sec:authorize="hasRole('ROLE_ADMIN')">Modalidades</a></li>
-				<li class="nav-item"><a class="nav-link" href="/eventos"
-				sec:authorize="hasRole('ROLE_ADMIN')">Evento</a></li>
 				<sec:authorize ifAllGranted="ROLE_ADMIN,ROLE_USER">
 				<li class="nav-item"><a class="nav-link" href="/montaAgenda">Agenda</a></li>
 				</sec:authorize>
@@ -84,18 +82,21 @@
 			<table class="table" >
 				<thead>
 					<tr>
-						<th>Nome</th>
+						<th>Evento</th>
 						<th>Modalidade</th>
+						<th>Status</th>
 						<th>Inicio</th>
-						<th>Fim</th>
+						<th>Horario</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="evnt : ${eventosPart}">
 						<td th:text="${evnt.title}"></td>
 						<td th:text="${evnt.modalidade.descricao}"></td>
+						<td th:if="${evnt.ativo}">Confirmado</td>
+						<td th:if="${!evnt.ativo}">Cancelado</td>
 						<td th:text="${evnt.start}"></td>
-						<td th:text="${evnt.end}"></td>
+						<td th:text="${evnt.horario}"></td>
 					</tr>
 				</tbody>
 			</table>

@@ -121,22 +121,78 @@ public class EventoController {
     @GetMapping("/evento/editar/{id}")
     public ModelAndView editar(@PathVariable("id") Long id) {
     	ModelAndView modelAndView = new ModelAndView("ListaEventos"); 
-    	modelAndView.addObject( this.eventos.findOne(id)); 
+    	
+    	Evento ev = this.eventos.findOne(id);
+    	
+		String startDay,startMonth,startYear,dataStart;
+		String endDay,endMonth,endYear,dataEnd;
+		
+		startDay = ev.getStart().substring(8,10);
+		startMonth =  ev.getStart().substring(5,7);
+		startYear =  ev.getStart().substring(0,4);
+		dataStart = startDay+"/"+startMonth+"/"+startYear;
+		ev.setStart(dataStart);
+		
+		endDay = ev.getEnd().substring(8,10);
+		endMonth =  ev.getEnd().substring(5,7);
+		endYear =  ev.getEnd().substring(0,4);
+		dataEnd = endDay+"/"+endMonth+"/"+endYear;
+		ev.setEnd(dataEnd);
+    	
+    	modelAndView.addObject( ev); 
 		modelAndView.addObject("eventos", eventos.findAll()); 
 		modelAndView.addObject("modalidades", modalidades.findAll()); 
 		modelAndView.addObject("praias", praias.findAll()); 
         return modelAndView;
     }
     
-    @GetMapping("/evento/excluir/{id}")
+    @GetMapping("/evento/cancelar/{id}")
     public ModelAndView excluir(@PathVariable("id") Long id,
 			RedirectAttributes attributes) {
-    	this.eventos.delete(id);
+    	Evento ev = this.eventos.findOne(id);
+    	ev.setAtivo(false);
+    	this.eventos.save(ev);
 		ModelAndView modelAndView = new ModelAndView("redirect:/eventos"); 
 		attributes.addFlashAttribute("mensagem","Evento excluida com sucesso");
         return modelAndView;
     }
     
+    
+    @GetMapping("/evento/participantes/{id}")
+    public ModelAndView participantes(@PathVariable("id") Long id) {
+    	ModelAndView modelAndView = new ModelAndView("Participantes"); 
+    	
+    	Evento ev = this.eventos.findOne(id);
+    	modelAndView.addObject("nome", ev.getTitle()); 
+		modelAndView.addObject("participantes", ev.getUsuarios()); 
+        return modelAndView;
+    }
+    
+    
+    
+    @GetMapping("/evento/agendaEditar/{id}")
+    public ModelAndView agendaEditar(@PathVariable("id") String id) {
+    	ModelAndView modelAndView = new ModelAndView("ListaEventos"); 
+    	
+    	String startDay,startMonth,startYear,dataStart;
+    	String datX = id.replaceAll("-","/");
+    	
+    	
+    	startDay = id.substring(8,10);
+		startMonth =  id.substring(5,7);
+		startYear =  id.substring(0,4);
+		dataStart = startDay+"/"+startMonth+"/"+startYear;
+    	
+    	
+    	Evento ev = new Evento();
+    	ev.setStart(dataStart);
+    	
+    	modelAndView.addObject( ev);  
+		modelAndView.addObject("eventos", eventos.eventosDodia(datX)); 
+		modelAndView.addObject("modalidades", modalidades.findAll()); 
+		modelAndView.addObject("praias", praias.findAll()); 
+        return modelAndView;
+    }
  
 	
 }

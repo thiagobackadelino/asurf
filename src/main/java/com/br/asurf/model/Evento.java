@@ -24,6 +24,9 @@ public class Evento   implements Serializable {
 	private String end;
 	private String url;
 	private String horario;
+	private boolean ativo = true;
+	
+	private Long vagas;
 	
 	@ManyToOne
 	private Praia praia;
@@ -113,8 +116,22 @@ public class Evento   implements Serializable {
 	public void setHorario(String horario) {
 		this.horario = horario;
 	}
+
+	public Long getVagas() {
+		return vagas;
+	}
+
+	public void setVagas(Long vagas) {
+		this.vagas = vagas;
+	}
 	
-	
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
 	
 	
 }

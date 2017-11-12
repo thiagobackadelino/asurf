@@ -17,4 +17,7 @@ public interface Eventos extends JpaRepository<Evento, Long> {
 	@Query("SELECT p FROM Evento p WHERE LOWER(p.title) = LOWER(:nome)")
     public Evento  evento(@Param("nome") String n);
 	
+	
+	@Query("SELECT p FROM Evento p WHERE LOWER(p.start) = LOWER(:id)")
+    public List<Evento>   eventosDodia(@Param("id") String n);
 }

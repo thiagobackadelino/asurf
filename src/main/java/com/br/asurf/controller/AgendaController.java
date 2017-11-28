@@ -72,7 +72,7 @@ public class AgendaController {
 		
 		for(int i = 0 ;i <= (EventoX.size()  - 1 ); i++){
 			
-			Evento.add(new Evento(EventoX.get(i).getTitle(),EventoX.get(i).getStart(),EventoX.get(i).getEnd(),EventoX.get(i).getUrl()));
+			Evento.add(new Evento(EventoX.get(i).getTitle()+" - "+EventoX.get(i).getPraia().getDescricao()+" - "+EventoX.get(i).getModalidade().getDescricao(),EventoX.get(i).getStart(),EventoX.get(i).getEnd(),EventoX.get(i).getUrl()));
 			
 		}
 						

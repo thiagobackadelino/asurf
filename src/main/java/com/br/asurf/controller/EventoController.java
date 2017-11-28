@@ -134,15 +134,16 @@ public class EventoController {
 		startMonth =  ev.getStart().substring(5,7);
 		startYear =  ev.getStart().substring(0,4);
 		dataStart = startDay+"/"+startMonth+"/"+startYear;
-		ev.setStart(dataStart);
+		ev.setStart(ev.getStart().substring(11,16));
 		
 		endDay = ev.getEnd().substring(8,10);
 		endMonth =  ev.getEnd().substring(5,7);
 		endYear =  ev.getEnd().substring(0,4);
 		dataEnd = endDay+"/"+endMonth+"/"+endYear;
-		ev.setEnd(dataEnd);
+		ev.setEnd(ev.getEnd().substring(11,16));
     	
     	modelAndView.addObject( ev); 
+    	modelAndView.addObject("diaSel", dataStart.replaceAll("/","-"));
 		modelAndView.addObject("eventos", eventos.findAll()); 
 		modelAndView.addObject("modalidades", modalidades.findAll()); 
 		modelAndView.addObject("praias", praias.findAll()); 

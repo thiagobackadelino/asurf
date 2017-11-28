@@ -67,9 +67,15 @@ public class ModalidadeController {
     @GetMapping("/modalidade/excluir/{id}")
     public ModelAndView excluir(@PathVariable("id") Long id,
 			RedirectAttributes attributes) {
-    	this.modalidades.delete(id);
+    	try{
+    		this.modalidades.delete(id);
+    		attributes.addFlashAttribute("mensagem","Modalidade excluido com sucesso");
+    	}
+    	catch(Exception e){
+    		attributes.addFlashAttribute("mensagem","Modalidade Não pode ser excluida pois contem eventos relacionados");
+    	}
 		ModelAndView modelAndView = new ModelAndView("redirect:/modalidades"); 
-		attributes.addFlashAttribute("mensagem","Modalidade excluido com sucesso");
+		
         return modelAndView;
     }
     

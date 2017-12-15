@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.br.asurf.model.Evento;
+import com.br.asurf.model.Role;
 import com.br.asurf.model.Usuario;
 import com.br.asurf.repository.Eventos;
 import com.br.asurf.repository.Modalidades;
@@ -101,10 +102,21 @@ public class AgendaController {
 		dataEnd = endDay+"/"+endMonth+"/"+endYear;
 		ev.setEnd(dataEnd);
     	
+		
+		 List<Usuario> abc = new ArrayList();
+		 
+		 for(Usuario u : usuarios.getUsuariosProfessor(evento)){
+			 for(Role r : u.getRoles()){
+				 if(u.getNome().equals("PROFESSOR")){
+					 abc.add(u);
+				 }
+			 }
+		 }
     	
     	modelAndView.addObject(ev); 
     	modelAndView.addObject("praias", ev.getPraia()); 
 		modelAndView.addObject("modalidades",ev.getModalidade());
+		modelAndView.addObject("professores",abc);
         return modelAndView;
     }
     

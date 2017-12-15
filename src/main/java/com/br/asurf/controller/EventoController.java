@@ -3,7 +3,9 @@ package com.br.asurf.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -20,9 +22,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.br.asurf.model.Evento;
 import com.br.asurf.model.Modalidade;
 import com.br.asurf.model.Praia;
+import com.br.asurf.model.Usuario;
 import com.br.asurf.repository.Eventos;
 import com.br.asurf.repository.Modalidades;
-import com.br.asurf.repository.Praias; 
+import com.br.asurf.repository.Praias;
+import com.br.asurf.repository.UsuariosRep; 
  
 
 
@@ -33,6 +37,8 @@ public class EventoController {
 	private Eventos eventos;
 	@Autowired
 	private Modalidades modalidades;
+	@Autowired
+	private UsuariosRep usuarios;
 	@Autowired
 	private Praias praias;
 
@@ -105,8 +111,7 @@ public class EventoController {
 	       		
 	       		
 	       		evento.setUrl("participar/"+evento.getTitle());
-	       		
-	       		
+
 	       		this.eventos.save(evento); 
 	       		attributes.addFlashAttribute("mensagem","Evento salvo com sucesso");
  
@@ -146,7 +151,7 @@ public class EventoController {
     	modelAndView.addObject("diaSel", dataStart.replaceAll("/","-"));
 		modelAndView.addObject("eventos", eventos.findAll()); 
 		modelAndView.addObject("modalidades", modalidades.findAll()); 
-		modelAndView.addObject("praias", praias.findAll()); 
+		modelAndView.addObject("praias", praias.findAll());  
         return modelAndView;
     }
     

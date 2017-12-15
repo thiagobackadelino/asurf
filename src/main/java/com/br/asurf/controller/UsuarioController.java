@@ -154,11 +154,10 @@ public class UsuarioController {
 			return refreshview(usuario ,result, attributes);
 		}
 		else{
+		if(usuario.getId() != null){
 		List<Evento> ex = this.usuarios.findOne(usuario.getId()).getEventos();	
-		
-		
 		usuario.setEventos(ex);
-		
+		}
 		this.usuarios.save(usuario);
 		ModelAndView modelAndView = new ModelAndView("redirect:/usuarios");
 		attributes.addFlashAttribute("mensagem","Usuario salvo com sucesso");

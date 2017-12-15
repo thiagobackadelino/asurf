@@ -124,6 +124,18 @@ $(document).ready(function() {
 							</tr>
 						</tbody>
 					</table>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Professores</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="praia : ${professores}">
+								<td th:text="${praia.nome}"></td>
+							</tr>
+						</tbody>
+					</table>
 					<button type="submit" class="btn btn-primary">Participar</button>
 				</form>
 

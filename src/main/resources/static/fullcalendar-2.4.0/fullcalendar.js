@@ -4791,13 +4791,13 @@ var DayGrid = Grid.extend({
 		}
 
 		return '' +
-			'<div class="' + classes.join(' ') + '">' +
-				'<div class="fc-bg">' +
+			'<div class="' + classes.join(' ') + '" editable="false">' +
+				'<div class="fc-bg" editable="false">' +
 					'<table>' +
 						this.rowHtml('day', row) + // leverages RowRenderer. calls dayCellHtml()
 					'</table>' +
 				'</div>' +
-				'<div class="fc-content-skeleton">' +
+				'<div class="fc-content-skeleton" editable="false">' +
 					'<table>' +
 						(this.numbersVisible ?
 							'<thead>' +
@@ -5308,7 +5308,7 @@ DayGrid.mixin({
 				(htmlEscape(event.title || '') || '&nbsp;') + // we always want one line of height
 			'</span>';
 		
-		return '<a  title ="'+event.title+'" class="' + classes.join(' ') + '"' +
+		return '<a editable="false"  title ="'+event.title+'" class="' + classes.join(' ') + '"' +
 				(event.url ?
 					' href="' + htmlEscape(event.url) + '"' :
 					''
@@ -5392,7 +5392,7 @@ DayGrid.mixin({
 					emptyCellsUntil(seg.leftCol);
 
 					// create a container that occupies or more columns. append the event element.
-					td = $('<td class="fc-event-container"/>').append(seg.el);
+					td = $('<td editable="false" class="fc-event-container"/>').append(seg.el);
 					if (seg.leftCol != seg.rightCol) {
 						td.attr('colspan', seg.rightCol - seg.leftCol + 1);
 					}
@@ -5695,7 +5695,7 @@ DayGrid.mixin({
 		var _this = this;
 		var view = this.view;
 
-		return $('<a class="fc-more"/>')
+		return $('<a editable="false" class="fc-more"/>')
 			.text(
 				this.getMoreLinkText(hiddenSegs.length)
 			)
@@ -5791,7 +5791,7 @@ DayGrid.mixin({
 				'<div class="fc-clear"/>' +
 			'</div>' +
 			'<div class="fc-body ' + view.widgetContentClass + '">' +
-				'<div class="fc-event-container"></div>' +
+				'<div editable="false" class="fc-event-container"></div>' +
 			'</div>'
 		);
 		var segContainer = content.find('.fc-event-container');
@@ -6461,7 +6461,7 @@ TimeGrid.mixin({
 			colSegs = segCols[col];
 			this.placeSlotSegs(colSegs); // compute horizontal coordinates, z-index's, and reorder the array
 
-			containerEl = $('<div class="fc-event-container"/>');
+			containerEl = $('<div editable="false" class="fc-event-container"/>');
 
 			// assign positioning CSS and insert into container
 			for (i = 0; i < colSegs.length; i++) {
@@ -6585,7 +6585,7 @@ TimeGrid.mixin({
 	fgSegHtml: function(seg, disableResizing) {
 		var view = this.view;
 		var event = seg.event;
-		var isDraggable = view.isEventDraggable(event);
+		var isDraggable = false;
 		var isResizableFromStart = !disableResizing && seg.isStart && view.isEventResizableFromStart(event);
 		var isResizableFromEnd = !disableResizing && seg.isEnd && view.isEventResizableFromEnd(event);
 		var classes = this.getSegClasses(seg, isDraggable, isResizableFromStart || isResizableFromEnd);
@@ -6612,7 +6612,7 @@ TimeGrid.mixin({
 			startTimeText = this.getEventTimeText(event, null, false); // displayEnd=false
 		}
 
-		return '<a class="' + classes.join(' ') + '"' +
+		return '<a  editable="false" class="' + classes.join(' ') + '"' +
 			(event.url ?
 				' href="' + htmlEscape(event.url) + '"' :
 				''
@@ -6622,7 +6622,7 @@ TimeGrid.mixin({
 				''
 				) +
 			'>' +
-				'<div class="fc-content">' +
+				'<div  editable="false" class="fc-content">' +
 					(timeText ?
 						'<div class="fc-time"' +
 						' data-start="' + htmlEscape(startTimeText) + '"' +
@@ -7472,14 +7472,7 @@ var View = fc.View = Class.extend({
 	isEventDraggable: function(event) {
 		var source = event.source || {};
 
-		return firstDefined(
-			event.startEditable,
-			source.startEditable,
-			this.opt('eventStartEditable'),
-			event.editable,
-			source.editable,
-			this.opt('editable')
-		);
+		
 	},
 
 
@@ -8290,7 +8283,7 @@ function Calendar_constructor(element, overrides) {
 			element.addClass('fc-unthemed');
 		}
 
-		content = $("<div class='fc-view-container'/>").prependTo(element);
+		content = $("<div editable='false' class='fc-view-container'/>").prependTo(element);
 
 		header = t.header = new Header(t, options);
 		headerElement = header.render();
@@ -10533,8 +10526,8 @@ var BasicView = View.extend({
 		classes.unshift('fc-day-number');
 
 		return '' +
-			'<td class="' + classes.join(' ') + '" data-date="' + date.format() + '">' +
-			'<a href="/evento/agendaEditar/'+ date.format() +'" >'+date.date()+'</a>' +
+			'<td  editable="false" class="' + classes.join(' ') + '" data-date="' + date.format() + '">' +
+			'<a editable="false" href="/evento/agendaEditar/'+ date.format() +'" >'+date.date()+'</a>' +
 			'</td>';
 	},
 

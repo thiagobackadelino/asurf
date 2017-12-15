@@ -17,6 +17,7 @@ $(document).ready(function() {
 			center: 'title',
 			right: 'month,agendaWeek,agendaDay'
 		},
+		editable: false,
 		defaultDate: dataAtual,		
 		editable: true,
 		eventLimit: true,
